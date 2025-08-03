@@ -35,6 +35,8 @@ class RainbowOptionsPanel(
     private lateinit var colorLabel3: JLabel
     private lateinit var colorLabel4: JLabel
     private lateinit var colorLabel5: JLabel
+    private lateinit var colorLabel6: JLabel
+    private lateinit var colorLabel7: JLabel
 
     private val colorLabels: Array<JLabel>
 
@@ -43,6 +45,8 @@ class RainbowOptionsPanel(
     private lateinit var color3: ColorPanel
     private lateinit var color4: ColorPanel
     private lateinit var color5: ColorPanel
+    private lateinit var color6: ColorPanel
+    private lateinit var color7: ColorPanel
 
     private val colors: Array<ColorPanel>
 
@@ -53,8 +57,8 @@ class RainbowOptionsPanel(
             EventDispatcher.create(ColorAndFontSettingsListener::class.java)
 
     init {
-        colors = arrayOf(color1, color2, color3, color4, color5)
-        colorLabels = arrayOf(colorLabel1, colorLabel2, colorLabel3, colorLabel4, colorLabel5)
+        colors = arrayOf(color1, color2, color3, color4, color5, color6, color7)
+        colorLabels = arrayOf(colorLabel1, colorLabel2, colorLabel3, colorLabel4, colorLabel5, colorLabel6, colorLabel7)
 
         val actionListener = ActionListener {
             eventDispatcher.multicaster.settingsChanged()
@@ -186,7 +190,7 @@ class RainbowOptionsPanel(
         }
     }
 
-    private fun minRange() = minOf(RainbowSettings.instance.numberOfColors, 5)
+    private fun minRange() = RainbowSettings.instance.numberOfColors
 
     override fun processListOptions(): MutableSet<String> = mutableSetOf(
             RainbowHighlighter.NAME_ROUND_BRACKETS,

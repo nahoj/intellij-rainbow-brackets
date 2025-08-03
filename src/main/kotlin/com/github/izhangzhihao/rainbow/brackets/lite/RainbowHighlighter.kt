@@ -31,15 +31,15 @@ object RainbowHighlighter {
     private val angleBrackets: CharArray = charArrayOf('<', '>')
 
     private val settings = RainbowSettings.instance
-
-    private val roundBracketsRainbowColorKeys: Array<TextAttributesKey> =
-            createRainbowAttributesKeys(KEY_ROUND_BRACKETS, settings.numberOfColors)
-    private val squareBracketsRainbowColorKeys: Array<TextAttributesKey> =
-            createRainbowAttributesKeys(KEY_SQUARE_BRACKETS, settings.numberOfColors)
-    private val squigglyBracketsRainbowColorKeys: Array<TextAttributesKey> =
-            createRainbowAttributesKeys(KEY_SQUIGGLY_BRACKETS, settings.numberOfColors)
-    private val angleBracketsRainbowColorKeys: Array<TextAttributesKey> =
-            createRainbowAttributesKeys(KEY_ANGLE_BRACKETS, settings.numberOfColors)
+    
+    // Cache for color keys, will be lazily created when needed
+    private var roundBracketsRainbowColorKeys: Array<TextAttributesKey>? = null
+    private var squareBracketsRainbowColorKeys: Array<TextAttributesKey>? = null
+    private var squigglyBracketsRainbowColorKeys: Array<TextAttributesKey>? = null
+    private var angleBracketsRainbowColorKeys: Array<TextAttributesKey>? = null
+    
+    // Keep track of the number of colors when keys were created
+    private var lastColorCount: Int = 0
 
     private val rainbowElement: HighlightInfoType = HighlightInfoType
             .HighlightInfoTypeImpl(HighlightSeverity.INFORMATION, DefaultLanguageHighlighterColors.CONSTANT)
@@ -56,13 +56,29 @@ object RainbowHighlighter {
                 .toList()
                 .toTypedArray()
     }
+    
+    // Initialize or update color keys as needed
+    private fun ensureColorKeysCreated() {
+        val currentColorCount = settings.numberOfColors
+        
+        // If color count changed or keys not yet initialized, create them
+        if (lastColorCount != currentColorCount || roundBracketsRainbowColorKeys == null) {
+            roundBracketsRainbowColorKeys = createRainbowAttributesKeys(KEY_ROUND_BRACKETS, currentColorCount)
+            squareBracketsRainbowColorKeys = createRainbowAttributesKeys(KEY_SQUARE_BRACKETS, currentColorCount)
+            squigglyBracketsRainbowColorKeys = createRainbowAttributesKeys(KEY_SQUIGGLY_BRACKETS, currentColorCount)
+            angleBracketsRainbowColorKeys = createRainbowAttributesKeys(KEY_ANGLE_BRACKETS, currentColorCount)
+            lastColorCount = currentColorCount
+        }
+    }
 
     fun getRainbowAttributesKeys(rainbowName: String): Array<TextAttributesKey> {
+        ensureColorKeysCreated()
+        
         return when (rainbowName) {
-            NAME_ROUND_BRACKETS -> roundBracketsRainbowColorKeys
-            NAME_SQUARE_BRACKETS -> squareBracketsRainbowColorKeys
-            NAME_SQUIGGLY_BRACKETS -> squigglyBracketsRainbowColorKeys
-            NAME_ANGLE_BRACKETS -> angleBracketsRainbowColorKeys
+            NAME_ROUND_BRACKETS -> roundBracketsRainbowColorKeys!!
+            NAME_SQUARE_BRACKETS -> squareBracketsRainbowColorKeys!!
+            NAME_SQUIGGLY_BRACKETS -> squigglyBracketsRainbowColorKeys!!
+            NAME_ANGLE_BRACKETS -> angleBracketsRainbowColorKeys!!
             else -> throw IllegalArgumentException("Unknown rainbow name: $rainbowName")
         }
     }

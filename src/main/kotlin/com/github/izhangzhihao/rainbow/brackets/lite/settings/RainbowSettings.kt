@@ -21,7 +21,7 @@ class RainbowSettings : PersistentStateComponent<RainbowSettings> {
     var isShowRainbowIndentGuides = true
 
     var isDisplayBracketsInBold = false
-    var numberOfColors = 5
+    var numberOfColors = 7
 
     var doNOTRainbowifyBigFiles = true
     var bigFilesLinesThreshold = 1000
@@ -39,6 +39,7 @@ class RainbowSettings : PersistentStateComponent<RainbowSettings> {
     }
 
     companion object {
+        @JvmStatic
         val instance: RainbowSettings
             get() = ApplicationManager.getApplication().getService(RainbowSettings::class.java)
     }
