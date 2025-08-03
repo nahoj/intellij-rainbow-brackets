@@ -30,7 +30,7 @@ object RainbowHighlighter {
     private val squigglyBrackets: CharArray = charArrayOf('{', '}')
     private val angleBrackets: CharArray = charArrayOf('<', '>')
 
-    private val settings = RainbowSettings.instance
+    private val settings by lazy { RainbowSettings.instance }
     
     // Cache for color keys, will be lazily created when needed
     private var roundBracketsRainbowColorKeys: Array<TextAttributesKey>? = null

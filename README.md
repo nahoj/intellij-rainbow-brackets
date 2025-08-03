@@ -1,6 +1,8 @@
-A fork of the Intellij Rainbow Brackets plugin with a few additional features:
+A fork of the IntelliJ Rainbow Brackets plugin with a few additional features:
 
-- Bold brackets
+- **(** Bold **)** brackets
+- An additional, Bright color scheme
+- Number of colors set to 7
 
 ---
 

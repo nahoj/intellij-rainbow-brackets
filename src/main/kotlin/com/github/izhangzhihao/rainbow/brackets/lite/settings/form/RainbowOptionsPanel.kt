@@ -9,15 +9,16 @@ import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.EventDispatcher
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode
+import org.w3c.dom.Element
+import org.w3c.dom.NodeList
 import java.awt.Color
 import java.awt.event.ActionListener
-import javax.swing.JLabel
-import javax.swing.JPanel
+import javax.swing.*
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 import javax.swing.tree.TreePath
 import javax.swing.tree.TreeSelectionModel
-
+import javax.xml.parsers.DocumentBuilderFactory
 
 class RainbowOptionsPanel(
         private val options: ColorAndFontOptions,
@@ -52,6 +53,10 @@ class RainbowOptionsPanel(
 
     private lateinit var gradientLabel: JLabel
 
+    private lateinit var importLabel: JLabel
+    private lateinit var schemeComboBox: JComboBox<String>
+    private lateinit var importButton: JButton
+
     private val properties: PropertiesComponent = PropertiesComponent.getInstance()
     private val eventDispatcher: EventDispatcher<ColorAndFontSettingsListener> =
             EventDispatcher.create(ColorAndFontSettingsListener::class.java)
@@ -60,6 +65,13 @@ class RainbowOptionsPanel(
         colors = arrayOf(color1, color2, color3, color4, color5, color6, color7)
         colorLabels = arrayOf(colorLabel1, colorLabel2, colorLabel3, colorLabel4, colorLabel5, colorLabel6, colorLabel7)
 
+        // Initialize import dropdown
+        schemeComboBox.model = DefaultComboBoxModel(arrayOf(
+            "Default",
+            "Darcula", 
+            "Bright"
+        ))
+        
         val actionListener = ActionListener {
             eventDispatcher.multicaster.settingsChanged()
             options.stateChanged()
@@ -67,6 +79,11 @@ class RainbowOptionsPanel(
         rainbow.addActionListener(actionListener)
         for (c in colors) {
             c.addActionListener(actionListener)
+        }
+        
+        // Add import button listener
+        importButton.addActionListener {
+            importColorsFromScheme(schemeComboBox.selectedItem as String)
         }
 
         options.addListener(object : ColorAndFontSettingsListener.Abstract() {
@@ -169,6 +186,113 @@ class RainbowOptionsPanel(
         }
     }
 
+    private fun importColorsFromScheme(schemeName: String) {
+        try {
+            val resourcePath = when (schemeName) {
+                "Default" -> "/colorSchemes/rainbow-color-default.xml"
+                "Darcula" -> "/colorSchemes/rainbow-color-default-darcula.xml"
+                "Bright" -> "/colorSchemes/rainbow-color-bright.xml"
+                else -> return
+            }
+            
+            val colorsMap = parseColorSchemeXml(resourcePath)
+            
+            // Apply to all bracket types instead of just the selected one
+            val allDescriptions = options.currentDescriptions.asSequence()
+                .filter { it is TextAttributesDescription && it.group == category }
+                .map { it as TextAttributesDescription }
+                .groupBy { desc ->
+                    val rainbowName = desc.toString().split(":")[0]
+                    rainbowName
+                }
+            
+            // Apply colors to all bracket types
+            for ((rainbowName, descriptions) in allDescriptions) {
+                when (rainbowName) {
+                    RainbowHighlighter.NAME_ROUND_BRACKETS,
+                    RainbowHighlighter.NAME_SQUARE_BRACKETS,
+                    RainbowHighlighter.NAME_SQUIGGLY_BRACKETS,
+                    RainbowHighlighter.NAME_ANGLE_BRACKETS -> {
+                        applyImportedColors(rainbowName, descriptions.sortedBy { it.toString() }, colorsMap)
+                    }
+                }
+            }
+            
+            // Refresh the UI - if something is selected, update it
+            optionsTree.selectedDescriptions?.let { (rainbowName, descriptions) ->
+                reset(rainbowName, descriptions)
+            }
+            
+            // Fire settings changed to update everything
+            eventDispatcher.multicaster.settingsChanged()
+            options.stateChanged()
+            
+        } catch (e: Exception) {
+            // Handle error silently or show a notification
+            e.printStackTrace()
+        }
+    }
+    
+    private fun parseColorSchemeXml(resourcePath: String): Map<String, Color> {
+        val inputStream = javaClass.getResourceAsStream(resourcePath)
+            ?: throw IllegalArgumentException("Resource not found: $resourcePath")
+        
+        val factory = DocumentBuilderFactory.newInstance()
+        val builder = factory.newDocumentBuilder()
+        val document = builder.parse(inputStream)
+        
+        val colorsMap = mutableMapOf<String, Color>()
+        val options: NodeList = document.getElementsByTagName("option")
+        
+        for (i in 0 until options.length) {
+            val option = options.item(i) as Element
+            val name = option.getAttribute("name")
+            
+            val valueElement = option.getElementsByTagName("value").item(0) as? Element
+            val foregroundElement = valueElement?.getElementsByTagName("option")?.let { opts ->
+                for (j in 0 until opts.length) {
+                    val opt = opts.item(j) as Element
+                    if (opt.getAttribute("name") == "FOREGROUND") {
+                        return@let opt
+                    }
+                }
+                null
+            }
+            
+            foregroundElement?.getAttribute("value")?.let { colorValue ->
+                try {
+                    val color = Color(Integer.parseInt(colorValue, 16))
+                    colorsMap[name] = color
+                } catch (e: NumberFormatException) {
+                    // Skip invalid color values
+                }
+            }
+        }
+        
+        return colorsMap
+    }
+    
+    private fun applyImportedColors(
+        rainbowName: String, 
+        descriptions: List<TextAttributesDescription>,
+        colorsMap: Map<String, Color>
+    ) {
+        val keyPrefix = when (rainbowName) {
+            RainbowHighlighter.NAME_ROUND_BRACKETS -> "ROUND_BRACKETS_RAINBOW_COLOR"
+            RainbowHighlighter.NAME_SQUARE_BRACKETS -> "SQUARE_BRACKETS_RAINBOW_COLOR"
+            RainbowHighlighter.NAME_SQUIGGLY_BRACKETS -> "SQUIGGLY_BRACKETS_RAINBOW_COLOR"
+            RainbowHighlighter.NAME_ANGLE_BRACKETS -> "ANGLE_BRACKETS_RAINBOW_COLOR"
+            else -> return
+        }
+        
+        for (i in 0 until minOf(descriptions.size, colors.size)) {
+            val colorKey = "$keyPrefix$i"
+            colorsMap[colorKey]?.let { color ->
+                colors[i].selectedColor = color
+                descriptions[i].rainbowColor = color
+            }
+        }
+    }
 
     override fun applyChangesToScheme() {
         val scheme = options.selectedScheme
