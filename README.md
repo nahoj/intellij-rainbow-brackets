@@ -1,3 +1,8 @@
+A fork of the Intellij Rainbow Brackets plugin with a few additional features:
+
+- Bold brackets
+
+---
 
 <div align="center">
     <a href="https://plugins.jetbrains.com/plugin/10080-rainbow-brackets">

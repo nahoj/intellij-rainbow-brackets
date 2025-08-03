@@ -20,6 +20,7 @@ class RainbowSettings : PersistentStateComponent<RainbowSettings> {
     var isEnableRainbowAngleBrackets = true
     var isShowRainbowIndentGuides = true
 
+    var isDisplayBracketsInBold = false
     var numberOfColors = 5
 
     var doNOTRainbowifyBigFiles = true

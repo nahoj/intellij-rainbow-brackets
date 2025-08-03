@@ -15,6 +15,7 @@ class RainbowSettingsForm {
     private var enableRainbowSquareBrackets: JCheckBox? = null
     private var enableRainbowAngleBrackets: JCheckBox? = null
     private var showRainbowIndentGuides: JCheckBox? = null
+    private var displayBracketsInBold: JCheckBox? = null
 
     private var numberOfColors: JTextField? = null
 
@@ -38,6 +39,8 @@ class RainbowSettingsForm {
 
     fun isShowRainbowIndentGuides() = showRainbowIndentGuides?.isSelected
 
+    fun isDisplayBracketsInBold() = displayBracketsInBold?.isSelected
+
     fun numberOfColors() = numberOfColors?.text?.toIntOrNull()
 
     fun doNOTRainbowifyBigFiles() = doNOTRainbowifyBigFiles?.isSelected
@@ -51,6 +54,7 @@ class RainbowSettingsForm {
                 || isRainbowSquigglyBracketsEnabled() != settings.isEnableRainbowSquigglyBrackets
                 || isRainbowSquareBracketsEnabled() != settings.isEnableRainbowSquareBrackets
                 || isShowRainbowIndentGuides() != settings.isShowRainbowIndentGuides
+                || isDisplayBracketsInBold() != settings.isDisplayBracketsInBold
                 || numberOfColors() != settings.numberOfColors
                 || doNOTRainbowifyBigFiles() != settings.doNOTRainbowifyBigFiles
                 || bigFilesLinesThreshold() != settings.bigFilesLinesThreshold
@@ -72,6 +76,7 @@ class RainbowSettingsForm {
         enableRainbowSquigglyBrackets?.isSelected = settings.isEnableRainbowSquigglyBrackets
         enableRainbowSquareBrackets?.isSelected = settings.isEnableRainbowSquareBrackets
         showRainbowIndentGuides?.isSelected = settings.isShowRainbowIndentGuides
+        displayBracketsInBold?.isSelected = settings.isDisplayBracketsInBold
         numberOfColors?.text = settings.numberOfColors.toString()
         doNOTRainbowifyBigFiles?.isSelected = settings.doNOTRainbowifyBigFiles
         bigFilesLinesThreshold?.text = settings.bigFilesLinesThreshold.toString()

@@ -15,7 +15,7 @@ class RainbowConfigurable : SearchableConfigurable {
     }
 
     override fun isModified(): Boolean {
-        return settingsForm?.isModified ?: return false
+        return settingsForm?.isModified ?: false
     }
 
     @Throws(ConfigurationException::class)
@@ -27,6 +27,7 @@ class RainbowConfigurable : SearchableConfigurable {
         settings.isEnableRainbowSquigglyBrackets = settingsForm?.isRainbowSquigglyBracketsEnabled() ?: true
         settings.isEnableRainbowSquareBrackets = settingsForm?.isRainbowSquareBracketsEnabled() ?: true
         settings.isShowRainbowIndentGuides = settingsForm?.isShowRainbowIndentGuides() ?: false
+        settings.isDisplayBracketsInBold = settingsForm?.isDisplayBracketsInBold() ?: false
         settings.numberOfColors = settingsForm?.numberOfColors() ?: 5
         settings.doNOTRainbowifyBigFiles = settingsForm?.doNOTRainbowifyBigFiles() ?: true
         settings.bigFilesLinesThreshold = settingsForm?.bigFilesLinesThreshold() ?: 1000

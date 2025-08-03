@@ -7,9 +7,11 @@ import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.colors.TextAttributesScheme
+import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.psi.PsiElement
 import org.jetbrains.annotations.TestOnly
 import java.awt.Color
+import java.awt.Font
 
 object RainbowHighlighter {
 
@@ -119,13 +121,20 @@ object RainbowHighlighter {
         return getRainbowColorByLevel(rainbowName, level)
     }
 
-    fun getHighlightInfo(colorsScheme: TextAttributesScheme, element: PsiElement, level: Int)
-            : HighlightInfo? = getTextAttributes(element, level)
-            ?.let { attr ->
-                HighlightInfo
-                        .newHighlightInfo(rainbowElement)
-                        .textAttributes(attr)
-                        .range(element)
-                        .create()
-            }
+    fun getHighlightInfo(colorsScheme: TextAttributesScheme, element: PsiElement, level: Int): HighlightInfo? {
+        val textAttributesKey = getTextAttributes(element, level) ?: return null
+
+        var attributes = colorsScheme.getAttributes(textAttributesKey)
+
+        if (settings.isDisplayBracketsInBold) {
+            attributes = attributes.clone()
+            attributes.fontType = attributes.fontType or Font.BOLD
+        }
+
+        return HighlightInfo
+            .newHighlightInfo(rainbowElement)
+            .textAttributes(attributes)
+            .range(element)
+            .create()
+    }
 }
