@@ -5,6 +5,7 @@
 .sandbox/
 .gradle/
 build/
+*.hprof
 *.iml
 .DS_Store
 out
