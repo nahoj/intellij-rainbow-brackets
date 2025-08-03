@@ -67,9 +67,10 @@ class RainbowOptionsPanel(
 
         // Initialize import dropdown
         schemeComboBox.model = DefaultComboBoxModel(arrayOf(
+            "Bright",
+            "Darcula",
             "Default",
-            "Darcula", 
-            "Bright"
+            "Rayman"
         ))
         
         val actionListener = ActionListener {
@@ -176,7 +177,7 @@ class RainbowOptionsPanel(
 
         rainbow.isEnabled = true
         rainbow.isSelected = rainbowOn
-        gradientLabel.text = "Assign each ${rainbowName.toLowerCase()} its own color from the spectrum below:"
+        gradientLabel.text = "Assign each ${rainbowName.lowercase()} its own color from the spectrum below:"
 
         for (i in 0 until minRange()) {
             colors[i].isEnabled = rainbowOn
@@ -189,9 +190,10 @@ class RainbowOptionsPanel(
     private fun importColorsFromScheme(schemeName: String) {
         try {
             val resourcePath = when (schemeName) {
-                "Default" -> "/colorSchemes/rainbow-color-default.xml"
-                "Darcula" -> "/colorSchemes/rainbow-color-default-darcula.xml"
                 "Bright" -> "/colorSchemes/rainbow-color-bright.xml"
+                "Darcula" -> "/colorSchemes/rainbow-color-default-darcula.xml"
+                "Default" -> "/colorSchemes/rainbow-color-default.xml"
+                "Rayman" -> "/colorSchemes/rainbow-color-rayman.xml"
                 else -> return
             }
             
@@ -263,7 +265,7 @@ class RainbowOptionsPanel(
                 try {
                     val color = Color(Integer.parseInt(colorValue, 16))
                     colorsMap[name] = color
-                } catch (e: NumberFormatException) {
+                } catch (_: NumberFormatException) {
                     // Skip invalid color values
                 }
             }
