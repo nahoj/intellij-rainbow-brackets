@@ -21,15 +21,12 @@ class RainbowSettings : PersistentStateComponent<RainbowSettings> {
     var isShowRainbowIndentGuides = true
 
     var isDisplayBracketsInBold = false
-    var numberOfColors = 7
 
     var doNOTRainbowifyBigFiles = true
     var bigFilesLinesThreshold = 1000
 
 
-    var suppressDisabledCheck = false
     var suppressBigFileCheck = false
-    var suppressBlackListCheck = false
 
     @Nullable
     override fun getState() = this

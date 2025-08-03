@@ -28,7 +28,6 @@ class RainbowConfigurable : SearchableConfigurable {
         settings.isEnableRainbowSquareBrackets = settingsForm?.isRainbowSquareBracketsEnabled() ?: true
         settings.isShowRainbowIndentGuides = settingsForm?.isShowRainbowIndentGuides() ?: false
         settings.isDisplayBracketsInBold = settingsForm?.isDisplayBracketsInBold() ?: false
-        settings.numberOfColors = settingsForm?.numberOfColors() ?: 7
         settings.doNOTRainbowifyBigFiles = settingsForm?.doNOTRainbowifyBigFiles() ?: true
         settings.bigFilesLinesThreshold = settingsForm?.bigFilesLinesThreshold() ?: 1000
     }

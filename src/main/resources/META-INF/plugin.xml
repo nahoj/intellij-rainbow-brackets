@@ -74,6 +74,7 @@
     
     <incompatible-with>izhangzhihao.rainbow.brackets</incompatible-with>
     <incompatible-with>izhangzhihao.rainbow.brackets.lite</incompatible-with>
+    <incompatible-with>LJYXP.ColorBrackets</incompatible-with>
 
     <extensionPoints>
         <extensionPoint name="bracePairProvider" beanClass="com.intellij.lang.LanguageExtensionPoint" dynamic="true">
