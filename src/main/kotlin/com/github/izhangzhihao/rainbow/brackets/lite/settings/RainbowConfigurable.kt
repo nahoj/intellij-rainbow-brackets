@@ -42,11 +42,11 @@ class RainbowConfigurable : SearchableConfigurable {
     }
 
     @Nls
-    override fun getDisplayName() = "Rainbow Brackets Lite"
+    override fun getDisplayName() = "Rainbow Brackets Bold"
 
     override fun getId(): String = ID
 
     companion object {
-        val ID = "preferences.rainbow.brackets.lite"
+        val ID = "preferences.rainbow.brackets.bold"
     }
 }

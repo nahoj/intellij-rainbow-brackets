@@ -37,7 +37,7 @@ class RainbowColorsPageFactory : ColorAndFontPanelFactory, ColorAndFontDescripto
     override fun getColorDescriptors(): Array<ColorDescriptor> = emptyArray()
 
     companion object {
-        private const val RAINBOW_BRACKETS_GROUP = "Rainbow Brackets Lite"
+        private const val RAINBOW_BRACKETS_GROUP = "Rainbow Brackets Bold"
         private val ATTRIBUTE_DESCRIPTORS: Array<AttributesDescriptor> by lazy {
             createDescriptors(RainbowHighlighter.NAME_ROUND_BRACKETS) +
                     createDescriptors(RainbowHighlighter.NAME_SQUARE_BRACKETS) +

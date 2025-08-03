@@ -1,18 +1,22 @@
 <idea-plugin require-restart="true">
-    <id>izhangzhihao.rainbow.brackets.lite</id>
-    <name>Rainbow Brackets Lite - Free and OpenSource</name>
-    <vendor email="izhangzhihao@hotmail.com" url="https://github.com/izhangzhihao">izhangzhihao</vendor>
+    <id>intellij-rainbow-brackets-bold</id>
+    <name>Rainbow Brackets Bold</name>
+    <vendor url="https://github.com/nahoj">nahoj</vendor>
 
     <description><![CDATA[
-        <strong>🌈Rainbow Brackets Lite for IntelliJ based IDEs/Android Studio/HUAWEI DevEco Studio</strong>
+        <strong>🌈Rainbow Brackets Bold for IntelliJ based IDEs/Android Studio/HUAWEI DevEco Studio</strong>
         <br/>
-
+        <p>A fork of the IntelliJ Rainbow Brackets Lite plugin with a few added features:</p>
+        <ul>
+            <li>Bold brackets</li>
+        </ul>
         <p>Supported languages:</p>
         <p>Java, Scala, Clojure, Kotlin, Python, Haskell, Agda, Rust, JavaScript, TypeScript, Erlang, Go, Groovy, Ruby,
             Elixir, ObjectiveC, PHP, HTML, XML, SQL, Apex language, Dart, Pug/Jade, Bash, Vue.js, GLSL(the OpenGL Shading Language), Go Template, C++, C...</p>
-        <br/>
-        <p>NOTE: If you need C# or C++ support in Rider IDE, these features are only available in the paid version. The Lite version does not include them. Upgrade to the paid version for full functionality</p>
-        <br/>
+        <p>
+            The following screenshots are from the original project and may
+            show paid features that are not available in this version.
+        </p>
         <p>
             <img src="https://raw.githubusercontent.com/izhangzhihao/intellij-rainbow-brackets/2020.2/screenshots/with-java.png"
                  border="0" width="500" height="205" alt="with-java"/></p>
@@ -31,12 +35,6 @@
         <p>
             <img src="https://raw.githubusercontent.com/izhangzhihao/intellij-rainbow-brackets/2020.2/screenshots/with-HTML.png"
                  border="0" width="500" height="112" alt="with-HTML.png"/></p>
-        <p>
-            <img src="https://user-images.githubusercontent.com/10737066/40234968-46593fe2-5adb-11e8-8ea8-0026fad86ca9.gif"
-                 border="0" width="500" height="206" alt="Highlight current scope.gif"/></p>
-        <p>
-            <img src="https://user-images.githubusercontent.com/10737066/40235004-642dfe54-5adb-11e8-9fd7-648b92fab8f5.gif"
-                 border="0" width="500" height="206" alt="Highlight current scope.gif"/></p>
         ]]></description>
 
     <change-notes><![CDATA[
@@ -71,6 +69,9 @@
     <depends optional="true" config-file="php-brackets.xml">com.jetbrains.php</depends>
     <depends optional="true" config-file="go-template-brackets.xml">org.jetbrains.plugins.go-template</depends>
     <depends optional="true" config-file="jade-rainbow-visitor.xml">com.jetbrains.plugins.jade</depends>
+    
+    <incompatible-with>izhangzhihao.rainbow.brackets</incompatible-with>
+    <incompatible-with>izhangzhihao.rainbow.brackets.lite</incompatible-with>
 
     <extensionPoints>
         <extensionPoint name="bracePairProvider" beanClass="com.intellij.lang.LanguageExtensionPoint" dynamic="true">
@@ -95,8 +96,7 @@
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/rainbow-color-default-darcula.xml"/>
         <highlightingPassFactory implementation="com.github.izhangzhihao.rainbow.brackets.lite.indents.RainbowIndentsPassFactory"/>
         <editorNotificationProvider implementation="com.github.izhangzhihao.rainbow.brackets.lite.RainbowifyBanner"/>
-        <editorNotificationProvider implementation="com.github.izhangzhihao.rainbow.brackets.lite.LiteBanner"/>
-        <notificationGroup id="Rainbow Brackets Lite Notification Group" displayType="STICKY_BALLOON"/>
+        <notificationGroup id="Rainbow Brackets Bold Notification Group" displayType="STICKY_BALLOON"/>
     </extensions>
 
     <actions>

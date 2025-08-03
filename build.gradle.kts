@@ -27,7 +27,7 @@ repositories {
 }
 
 intellij {
-    pluginName.set("intellij-rainbow-brackets-lite")
+    pluginName.set("intellij-rainbow-brackets-bold")
 
     version.set(ideaVersion)
     //localPath = '/Users/izhangzhihao/Library/Application Support/JetBrains/Toolbox/apps/IDEA-U/ch-0/201.6668.121/IntelliJ IDEA 2020.1 EAP.app/Contents'
@@ -82,7 +82,7 @@ tasks {
     }
 
     jar {
-        archiveBaseName.set("intellij-rainbow-brackets-lite")
+        archiveBaseName.set("intellij-rainbow-brackets-bold")
     }
 }
 
