@@ -10,7 +10,8 @@ object BracePairs {
 
     private val providers = LanguageExtension<BracePairProvider>("izhangzhihao.rainbow.brackets.lite.bracePairProvider")
 
-    private val bracePairs =
+    // Make bracePairs lazy to avoid accessing services during class initialization
+    private val bracePairs by lazy {
             Language.getRegisteredLanguages()
                     .map { language ->
                         if (language is CompositeLanguage) {
@@ -62,6 +63,7 @@ object BracePairs {
                         language.displayName to braceMap
                     }
                     .toMap()
+    }
 
     fun getBracePairs(language: Language): MutableMap<String, MutableList<BracePair>>? = bracePairs[language.displayName]
 
