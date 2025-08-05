@@ -1,7 +1,8 @@
 A fork of the IntelliJ Rainbow Brackets plugin with a few additional features:
 
-- **(** Bold **)** brackets
-- An additional, Bright color scheme
+- Bold brackets
+- 2 additional, brighter color schemes
+- Load any of the 4 provided rainbow schemes on each IDE color scheme
 - Number of colors set to 7
 
 ---
@@ -12,7 +13,7 @@ A fork of the IntelliJ Rainbow Brackets plugin with a few additional features:
     </a>
 </div>
 <h1 align="center">Intellij Rainbow Brackets</h1>
-<p align="center">🌈Rainbow Brackets for IntelliJ-based IDEs/Android Studio/HUAWEI DevEco Studio And <a href="https://github.com/izhangzhihao/intellij-rainbow-brackets/blob/2022.3/Fleet.md">Fleet</p>
+<p align="center">🌈Rainbow Brackets for IntelliJ-based IDEs/Android Studio/HUAWEI DevEco Studio And <a href="https://github.com/izhangzhihao/intellij-rainbow-brackets/blob/2022.3/Fleet.md">Fleet</a></p>
 
 <p align="center">
 <a href="https://plugins.jetbrains.com/plugin/10080-rainbow-brackets"><img src="https://img.shields.io/jetbrains/plugin/r/stars/10080?style=flat-square"></a>

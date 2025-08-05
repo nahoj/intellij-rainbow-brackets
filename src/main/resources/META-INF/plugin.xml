@@ -9,7 +9,8 @@
         <p>A fork of the IntelliJ Rainbow Brackets Lite plugin with a few added features:</p>
         <ul>
             <li><b>(</b>Bold<b>)</b> brackets</li>
-            <li>An additional, Bright color theme</li>
+            <li>2 additional, brighter color schemes</li>
+            <li>Load any of the 4 provided rainbow schemes on each IDE color scheme</li>
             <li>Number of colors set to 7</li>
         </ul>
         <p>Supported languages:</p>
