@@ -5,6 +5,11 @@ A fork of the IntelliJ Rainbow Brackets plugin with a few additional features:
 - Load any of the 4 provided rainbow schemes on each IDE color scheme
 - Number of colors set to 7
 
+### Install
+
+- ./gradlew clean buildPlugin
+- "Install plugin from disk..." in your IDE
+
 ---
 
 <div align="center">
